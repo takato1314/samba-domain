@@ -10,6 +10,8 @@ RUN apt-get update \
     && apt-get install -y pkg-config attr acl samba smbclient ldap-utils winbind libnss-winbind libpam-winbind krb5-user krb5-kdc supervisor \
     # line below is for multi-site config (ping is for testing later) \
     && apt-get install -y openvpn inetutils-ping \
+    # line below is for ntp support
+    && apt-get install -y ntp \
     # Set up script \
     && chmod 755 /init.sh \
     # cleanup \
