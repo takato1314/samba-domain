@@ -6,6 +6,7 @@ appSetup () {
 
 	# Set variables
 	DOMAIN=${DOMAIN:-SAMDOM.LOCAL}
+	DOMAINUSER=${DOMAINUSER:-administrator}
 	DOMAINPASS=${DOMAINPASS:-youshouldsetapassword^123}
 	JOIN=${JOIN:-false}
 	JOINSITE=${JOINSITE:-NONE}
@@ -46,9 +47,9 @@ appSetup () {
 		mv /etc/samba/smb.conf /etc/samba/smb.conf.orig
 		if [[ ${JOIN,,} == "true" ]]; then
 			if [[ ${JOINSITE} == "NONE" ]]; then
-				samba-tool domain join ${LDOMAIN} DC -U"${URDOMAIN}\administrator" --password="${DOMAINPASS}" --dns-backend=SAMBA_INTERNAL
+				samba-tool domain join ${LDOMAIN} DC -U"${URDOMAIN}\\${DOMAINUSER}" --password="${DOMAINPASS}" --dns-backend=SAMBA_INTERNAL
 			else
-				samba-tool domain join ${LDOMAIN} DC -U"${URDOMAIN}\administrator" --password="${DOMAINPASS}" --dns-backend=SAMBA_INTERNAL --site=${JOINSITE}
+				samba-tool domain join ${LDOMAIN} DC -U"${URDOMAIN}\\${DOMAINUSER}" --password="${DOMAINPASS}" --dns-backend=SAMBA_INTERNAL --site=${JOINSITE}
 			fi
 		else
 			samba-tool domain provision --use-rfc2307 --domain=${URDOMAIN} --realm=${UDOMAIN} --server-role=dc --dns-backend=SAMBA_INTERNAL --adminpass=${DOMAINPASS} ${HOSTIP_OPTION}
@@ -130,7 +131,7 @@ appStart () {
     chown root:ntp /var/lib/samba/ntp_signd/
     chmod 750 /var/lib/samba/ntp_signd/
 		cp /etc/samba/external/smb.conf /etc/samba/smb.conf
-		/usr/bin/supervisord
+		exec /usr/bin/supervisord
 	else
 		echo "Config file is missing."
 	fi
