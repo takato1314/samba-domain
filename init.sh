@@ -90,7 +90,18 @@ appSetup () {
 	else
 		cp -f /etc/samba/external/smb.conf /etc/samba/smb.conf
 	fi
-        
+
+	# There may be some setup that needs to be done every time the
+	# container starts up. If so, run it first. It should be a
+	# regular BASH script, and will be sourced to pick up the
+	# environment variables above.
+	if [[ -f /etc/samba/external/startup.sh ]]; then
+		echo "Loading startup script ..."
+		source /etc/samba/external/startup.sh
+	else
+		echo "Skipping startup load, no script present."
+	fi
+
 	# Set up supervisor
 	echo "[supervisord]" > /etc/supervisor/conf.d/supervisord.conf
 	echo "nodaemon=true" >> /etc/supervisor/conf.d/supervisord.conf
