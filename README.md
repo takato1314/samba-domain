@@ -224,6 +224,7 @@ docker run -t -i \
  -p 192.168.3.222:636:636 \
  -p 192.168.3.222:1024-1044:1024-1044 \
  -p 192.168.3.222:3268-3269:3268-3269 \
+ -p 192.168.3.222:49152-65535:49152-65535 \
  -v /etc/localtime:/etc/localtime:ro \
  -v /data/docker/containers/samba/data/:/var/lib/samba \
  -v /data/docker/containers/samba/config/samba:/etc/samba/external \
@@ -266,6 +267,7 @@ docker run -t -i \
  -p 192.168.3.222:636:636 \
  -p 192.168.3.222:1024-1044:1024-1044 \
  -p 192.168.3.222:3268-3269:3268-3269 \
+ -p 192.168.3.222:49152-65535:49152-65535 \
  -v /etc/localtime:/etc/localtime:ro \
  -v /data/docker/containers/samba/data/:/var/lib/samba \
  -v /data/docker/containers/samba/config/samba:/etc/samba/external \
@@ -314,6 +316,7 @@ docker run -t -i \
  -p 192.168.3.222:636:636 \
  -p 192.168.3.222:1024-1044:1024-1044 \
  -p 192.168.3.222:3268-3269:3268-3269 \
+ -p 192.168.3.222:49152-65535:49152-65535 \
  -v /etc/localtime:/etc/localtime:ro \
  -v /data/docker/containers/samba/data/:/var/lib/samba \
  -v /data/docker/containers/samba/config/samba:/etc/samba/external \
@@ -388,6 +391,7 @@ services:
       - 192.168.3.222:636:636
       - 192.168.3.222:1024-1044:1024-1044
       - 192.168.3.222:3268-3269:3268-3269
+      - 192.168.3.222:49152-65535:49152-65535
     dns_search:
       - corp.example.com
     dns:
@@ -458,6 +462,7 @@ services:
       - 192.168.3.222:636:636
       - 192.168.3.222:1024-1044:1024-1044
       - 192.168.3.222:3268-3269:3268-3269
+      - 192.168.3.222:49152-65535:49152-65535
     dns_search:
       - corp.example.com
     dns:
@@ -536,6 +541,7 @@ services:
       - 192.168.3.222:636:636
       - 192.168.3.222:1024-1044:1024-1044
       - 192.168.3.222:3268-3269:3268-3269
+      - 192.168.3.222:49152-65535:49152-65535
     dns_search:
       - corp.example.com
     dns:

@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-LABEL maintainer="Fmstrat <fmstrat@NOSPAM.NO>"
+LABEL maintainer="Tina Burschka <tina@ideaplexus.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -23,3 +23,5 @@ RUN apt-get update \
 COPY init.sh /init.sh
 
 CMD /init.sh setup
+
+EXPOSE 53 53/udp 88 88/udp 135 137-138/udp 139 389 389/udp 445 464 464/udp 636 1024-1044 3268-3269 49152-65535
