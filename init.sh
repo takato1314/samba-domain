@@ -118,19 +118,19 @@ appSetup () {
 }
 
 appStart () {
-	/usr/bin/supervisord
+	if [[ -f /etc/samba/external/smb.conf ]]; then
+    chown root:ntp /var/lib/samba/ntp_signd/
+    chmod 750 /var/lib/samba/ntp_signd/
+		cp /etc/samba/external/smb.conf /etc/samba/smb.conf
+		/usr/bin/supervisord
+	else
+		echo "Config file is missing."
+	fi
 }
 
 case "$1" in
 	start)
-		if [[ -f /etc/samba/external/smb.conf ]]; then
-      chown root:ntp /var/lib/samba/ntp_signd/
-			chmod 750 /var/lib/samba/ntp_signd/
-			cp -f /etc/samba/external/smb.conf /etc/samba/smb.conf
-			appStart
-		else
-			echo "Config file is missing."
-		fi
+		appStart
 		;;
 	setup)
 		# If the supervisor conf isn't there, we're spinning up a new container
