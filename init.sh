@@ -14,7 +14,8 @@ appSetup () {
 	INSECURELDAP=${INSECURELDAP:-false}
 	DNSFORWARDER=${DNSFORWARDER:-NONE}
 	HOSTIP=${HOSTIP:-NONE}
-	
+	USEOWNCERTS=${USEOWNCERTS:-false}
+
 	LDOMAIN=${DOMAIN,,}
 	UDOMAIN=${DOMAIN^^}
 	URDOMAIN=${UDOMAIN%%.*}
@@ -63,6 +64,7 @@ appSetup () {
 			wins support = yes\\n\
 			template shell = /bin/bash\\n\
 			winbind nss info = rfc2307\\n\
+			rpc server dynamic port range = 49152-65535\\n\
 			idmap config ${URDOMAIN}: range = 10000-20000\\n\
 			idmap config ${URDOMAIN}: backend = ad\
 			" /etc/samba/smb.conf
@@ -75,6 +77,14 @@ appSetup () {
 			sed -i "/\[global\]/a \
 				\\\tldap server require strong auth = no\
 				" /etc/samba/smb.conf
+		fi
+		if [[ ${USEOWNCERTS,,} == "true" ]]; then
+			sed -i "/\[global\]/a \
+			\\\ttls enabled  = yes\\n\
+			tls keyfile  = /etc/samba/tls/${LDOMAIN}.key\\n\
+        	tls certfile = /etc/samba/tls/${LDOMAIN}.crt\\n\
+        	tls cafile   =\
+			" /etc/samba/smb.conf
 		fi
 		# Once we are set up, we'll make a file so that we know to use it if we ever spin this up again
 		cp -f /etc/samba/smb.conf /etc/samba/external/smb.conf
