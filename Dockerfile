@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 
 LABEL originalauthor="Fmstrat <fmstrat@NOSPAM.NO>"
 LABEL maintainer="Tina Burschka <tina@ideaplexus.com>"
+LABEL maintainer="Alex Soh <alex.soh@bertelsmann.de>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
